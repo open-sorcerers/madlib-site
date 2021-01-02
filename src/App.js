@@ -19,7 +19,7 @@ import {
   Blockquote
 } from './App.styled'
 
-import api from './api'
+// import api from './api'
 
 const App = ({ autofetch = true }) => {
   const [$email, setEmailRaw] = useState('')
