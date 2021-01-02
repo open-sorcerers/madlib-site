@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
-import blem from 'blem'
+import { useState } from 'react'
+// import blem from 'blem'
 import { pipe, pathOr } from 'ramda'
 import {
   Success,
@@ -24,7 +24,7 @@ import {
 const App = ({ autofetch = true }) => {
   const [$email, setEmailRaw] = useState('')
   const [$valid, setValid] = useState(false)
-  const [$attempt, setAttempt] = useState(0)
+  // const [$attempt, setAttempt] = useState(0)
   const [$status, setStatus] = useState('loaded')
   const setEmail = pipe(pathOr($email, ['target', 'value']), raw => {
     const at = raw.indexOf('@')
