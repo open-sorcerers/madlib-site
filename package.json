@@ -4,7 +4,7 @@
   "private": false,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && mv .next build",
+    "build": "next build",
     "start": "next start"
   },
   "dependencies": {
