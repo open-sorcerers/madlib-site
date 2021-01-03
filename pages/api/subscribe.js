@@ -19,7 +19,7 @@ export default async (req, res) => {
   const [Subject, TextPart, HTMLPart, CustomID] = pipe(
     prop('body'),
     of,
-    ap([getSubject, getTextPart, getHTML, getCustomID])
+    ap([getSubject, getTextPart, getHTML, getCustomId])
   )(body)
   try {
     const mailerRes = await mailjet
