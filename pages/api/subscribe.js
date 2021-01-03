@@ -14,38 +14,34 @@ const getHTML = orUnknown('html')
 const getCustomId = propOr(undefined, 'customID')
 
 export default async (req, res) => {
-  const { body } = req
   mailjet.connect(user, pass)
   const [Subject, TextPart, HTMLPart, CustomID] = pipe(
     prop('body'),
     of,
     ap([getSubject, getTextPart, getHTML, getCustomId])
-  )(body)
-  try {
-    const mailerRes = await mailjet
-      .post('send', { version: 'v3.1' })
-      .request({
-        Messages: [
-          {
-            From: {
+  )(req)
+  return await mailjet
+    .post('send', { version: 'v3.1' })
+    .request({
+      Messages: [
+        {
+          From: {
+            Email: 'community@madlib.space',
+            Name: 'Brekk'
+          },
+          To: [
+            {
               Email: 'community@madlib.space',
               Name: 'Brekk'
-            },
-            To: [
-              {
-                Email: 'community@madlib.space',
-                Name: 'Brekk'
-              }
-            ],
-            Subject,
-            TextPart,
-            HTMLPart,
-            CustomID
-          }
-        ]
-      })
-    res.status(200).send('')
-  } catch (e) {
-    res.status(403).send(e.toString())
-  }
+            }
+          ],
+          Subject,
+          TextPart,
+          HTMLPart,
+          CustomID
+        }
+      ]
+    })
+    .catch(e => res.status(500).send(e.toString()))
+    .then(x => res.status(200).send(''))
 }
