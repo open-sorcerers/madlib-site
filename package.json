@@ -8,8 +8,27 @@
     "start": "next start"
   },
   "dependencies": {
+    "@emotion/is-prop-valid": "^1.0.0",
+    "@emotion/react": "^11.1.4",
+    "@emotion/styled": "^11.0.0",
+    "@mdx-js/loader": "^1.6.22",
+    "@next/mdx": "^10.0.4",
+    "@open-sorcerers/breakpoints": "^0.0.5",
+    "axios": "^0.21.1",
+    "bodypaint": "^0.0.7",
     "next": "10.0.4",
+    "next-compose-plugins": "^2.2.1",
+    "next-react-svg": "^1.1.2",
+    "nodemailer": "^6.4.17",
+    "ramda": "^0.27.1",
     "react": "17.0.1",
-    "react-dom": "17.0.1"
+    "react-dom": "17.0.1",
+    "rebass": "^4.0.7"
+  },
+  "devDependencies": {
+    "eslint": "^7.17.0",
+    "eslint-config-sorcerers": "^0.0.5",
+    "prettier": "^2.2.1",
+    "prettier-eslint": "^12.0.0"
   }
 }
