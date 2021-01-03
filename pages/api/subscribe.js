@@ -1,41 +1,51 @@
-import nodemailer from 'nodemailer'
+import mailjet from 'node-mailjet'
+import { pipe, prop, of, ap, propOr, __ as $ } from 'ramda'
 
-const user = process.env.mailjetusername || '???'
-const pass = process.env.mailjetpass || '???'
+const UNKNOWN = '???'
 
-const transporter = nodemailer.createTransport({
-  host: 'in-v3.mailjet.com',
-  port: 25,
-  auth: { user, pass }
-})
+const user = process.env.mailjetusername || UNKNOWN
+const pass = process.env.mailjetpass || UNKNOWN
 
-const mailer = ({ email }) => {
-  const message = {
-    from: email,
-    to: `community@madlib.space`,
-    subject: `Newsletter subscription for: ${email}`,
-    text: email,
-    replyTo: email
-  }
-  return new Promise((good, bad) => {
-    transporter.sendMail(message, (error, info) =>
-      error ? bad(error) : good(info)
-    )
-  })
-}
+const orUnknown = propOr(UNKNOWN)
 
-const validate = ({ name }) => {
-  console.log('validating', name)
-  if (name == '') return false
-  return true
-}
+const getSubject = orUnknown('subject')
+const getTextPart = orUnknown('text')
+const getHTML = orUnknown('html')
+const getCustomIdOr = propOr(undefined, 'customID')
 
 export default async (req, res) => {
-  console.log('subscribing...')
-  if (!validate(req.body)) {
-    res.status(403).send('')
-    return
+  const { body } = req
+  mailjet.connect(user, pass)
+  const [Subject, TextPart, HTMLPart, CustomID] = pipe(
+    prop('body'),
+    of,
+    ap([getSubject, getTextPart, getHTML, getCustomID])
+  )(body)
+  try {
+    const mailerRes = await mailjet
+      .post('send', { version: 'v3.1' })
+      .request({
+        Messages: [
+          {
+            From: {
+              Email: 'community@madlib.space',
+              Name: 'Brekk'
+            },
+            To: [
+              {
+                Email: 'community@madlib.space',
+                Name: 'Brekk'
+              }
+            ],
+            Subject,
+            TextPart,
+            HTMLPart,
+            CustomID
+          }
+        ]
+      })
+    res.status(200).send(mailerRes.body)
+  } catch (e) {
+    res.status(403).send(e.toString())
   }
-  const mailerRes = await mailer(req.body)
-  res.send(mailerRes)
 }

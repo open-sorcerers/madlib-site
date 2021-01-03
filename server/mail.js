@@ -7,7 +7,11 @@ const addSubscriber = async email => {
       method: 'post',
       url: '/api/subscribe',
       headers: { 'Content-Type': 'application/json' },
-      data: { email }
+      data: {
+        subject: `New Subscriber: ${email}`,
+        text: `email: ${email}`,
+        html: `<strong>${email}</strong>`
+      }
     })
     return res
   } catch (e) {
