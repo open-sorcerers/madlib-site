@@ -19,9 +19,8 @@ import {
   EmailInput,
   Header,
   Page,
-  Logo,
-  Blockquote
-} from 'styles/Home'
+  Logo
+} from 'components/Main'
 import api from 'server/mail'
 
 const SignUp = () => {

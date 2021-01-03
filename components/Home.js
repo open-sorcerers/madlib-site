@@ -1,6 +1,12 @@
 import { useState } from 'react'
 import { pipe, pathOr } from 'ramda'
-import { Header, Logo, Blockquote, Footer, Github } from 'styles/Home'
+import {
+  Header,
+  Logo,
+  Blockquote,
+  Footer,
+  Github
+} from 'components/Main'
 import Link from 'components/Link'
 
 const Home = ({ children }) => (
