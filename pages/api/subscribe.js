@@ -1,10 +1,10 @@
-import mailjet from 'node-mailjet'
+import mj from 'node-mailjet'
 import { pipe, prop, of, ap, propOr, __ as $ } from 'ramda'
 
 const UNKNOWN = '???'
 
-const user = process.env.mailjetusername || UNKNOWN
-const pass = process.env.mailjetpass || UNKNOWN
+const user = process.env.MAILJET_USER || UNKNOWN
+const pass = process.env.MAILJET_PASS || UNKNOWN
 
 const orUnknown = propOr(UNKNOWN)
 
@@ -13,14 +13,14 @@ const getTextPart = orUnknown('text')
 const getHTML = orUnknown('html')
 const getCustomId = propOr(undefined, 'customID')
 
-export default async (req, res) => {
-  mailjet.connect(user, pass)
+export default (req, res) => {
+  const mailjet = mj.connect(user, pass)
   const [Subject, TextPart, HTMLPart, CustomID] = pipe(
     prop('body'),
     of,
     ap([getSubject, getTextPart, getHTML, getCustomId])
   )(req)
-  return await mailjet
+  return mailjet
     .post('send', { version: 'v3.1' })
     .request({
       Messages: [
