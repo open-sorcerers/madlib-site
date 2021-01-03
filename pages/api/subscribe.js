@@ -44,7 +44,7 @@ export default async (req, res) => {
           }
         ]
       })
-    res.status(200).send(mailerRes.body)
+    res.status(200).send('')
   } catch (e) {
     res.status(403).send(e.toString())
   }
