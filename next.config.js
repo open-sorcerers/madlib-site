@@ -6,7 +6,7 @@ const withReactSvg = require('next-react-svg')
 const path = require('path')
 
 const nextConfig = {
-  distDir: 'build',
+  distDir: 'public',
   webpack: (config, options) => config
 }
 
