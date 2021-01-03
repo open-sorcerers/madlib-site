@@ -11,7 +11,7 @@ const orUnknown = propOr(UNKNOWN)
 const getSubject = orUnknown('subject')
 const getTextPart = orUnknown('text')
 const getHTML = orUnknown('html')
-const getCustomIdOr = propOr(undefined, 'customID')
+const getCustomId = propOr(undefined, 'customID')
 
 export default async (req, res) => {
   const { body } = req
